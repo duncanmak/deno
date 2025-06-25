@@ -22,6 +22,13 @@ test("sync fail todo", (t) => {
   throw new Error("thrown from sync fail todo");
 });
 
+test("todo thrown sub test", async (t) => {
+  t.todo("this is a todo test and is not treated as a failure");
+  await t.test("test", () => {
+    throw new Error("this does not fail the test");
+  });
+});
+
 test("sync fail todo with message", (t) => {
   t.todo("this is a failing todo");
   throw new Error("thrown from sync fail todo with message");
@@ -33,6 +40,13 @@ test("sync skip pass", (t) => {
 
 test("sync skip pass with message", (t) => {
   t.skip("this is skipped");
+});
+
+test("skip thrown sub test", async (t) => {
+  t.skip("this is a skip test and is not treated as a failure");
+  await t.test("test", () => {
+    throw new Error("this does not fail the test");
+  });
 });
 
 test("sync pass", (t) => {
@@ -128,6 +142,29 @@ suite("suite", () => {
     });
     test("nested test 2", () => {});
   });
+});
+
+test("assertions available via text context", async (t) => {
+  assert.strictEqual(t.assert.deepEqual, assert.deepEqual);
+  assert.strictEqual(t.assert.deepStrictEqual, assert.deepStrictEqual);
+  assert.strictEqual(t.assert.doesNotMatch, assert.doesNotMatch);
+  assert.strictEqual(t.assert.doesNotReject, assert.doesNotReject);
+  assert.strictEqual(t.assert.doesNotThrow, assert.doesNotThrow);
+  assert.strictEqual(t.assert.equal, assert.equal);
+  assert.strictEqual(t.assert.fail, assert.fail);
+  assert.strictEqual(t.assert.ifError, assert.ifError);
+  assert.strictEqual(t.assert.match, assert.match);
+  assert.strictEqual(t.assert.notDeepEqual, assert.notDeepEqual);
+  assert.strictEqual(t.assert.notDeepStrictEqual, assert.notDeepStrictEqual);
+  assert.strictEqual(t.assert.notEqual, assert.notEqual);
+  assert.strictEqual(t.assert.notStrictEqual, assert.notStrictEqual);
+  assert.strictEqual(
+    t.assert.partialDeepStrictEqual,
+    assert.partialDeepStrictEqual,
+  );
+  assert.strictEqual(t.assert.rejects, assert.rejects);
+  assert.strictEqual(t.assert.strictEqual, assert.strictEqual);
+  assert.strictEqual(t.assert.throws, assert.throws);
 });
 
 test("unhandled rejection - passes but warns", () => {
