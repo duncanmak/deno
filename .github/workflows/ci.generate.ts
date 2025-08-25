@@ -328,7 +328,7 @@ const ci = {
   },
   on: {
     push: {
-      branches: ["main", "build-windows-arm64"],
+      branches: ["main"],
       tags: ["*"],
     },
     pull_request: {

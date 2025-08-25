@@ -8,7 +8,6 @@ on:
   push:
     branches:
       - main
-      - build-windows-arm64
     tags:
       - '*'
   pull_request:
