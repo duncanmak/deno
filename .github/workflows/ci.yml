@@ -87,16 +87,16 @@ jobs:
             job: test
             profile: debug
           - os: windows
-            arch: arm64
-            runner: windows-11-arm
-            job: test
-            profile: debug
-          - os: windows
             arch: x86_64
             runner: '${{ (!contains(github.event.pull_request.labels.*.name, ''ci-full'') && (github.event_name == ''pull_request'')) && ''ubuntu-24.04'' || github.repository == ''denoland/deno'' && ''windows-2022-xl'' || ''windows-2022'' }}'
             job: test
             profile: release
             skip: '${{ !contains(github.event.pull_request.labels.*.name, ''ci-full'') && (github.event_name == ''pull_request'') }}'
+          - os: windows
+            arch: aarch64
+            runner: windows-11-arm
+            job: test
+            profile: debug
           - os: linux
             arch: x86_64
             runner: '${{ github.repository == ''denoland/deno'' && ''ghcr.io/cirruslabs/ubuntu-runner-amd64:24.04'' || ''ubuntu-24.04'' }}'

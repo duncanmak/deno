@@ -12,6 +12,7 @@ const ubuntuX86XlRunner = "ghcr.io/cirruslabs/ubuntu-runner-amd64:24.04";
 const ubuntuARMRunner = "ubicloud-standard-16-arm";
 const windowsX86Runner = "windows-2022";
 const windowsX86XlRunner = "windows-2022-xl";
+const windowsARMRunner = "windows-11-arm";
 const macosX86Runner = "macos-13";
 const macosArmRunner = "macos-14";
 const selfHostedMacosArmRunner = "ghcr.io/cirruslabs/macos-runner:sonoma";
@@ -61,6 +62,11 @@ const Runners = {
     runner:
       `\${{ github.repository == 'denoland/deno' && '${windowsX86XlRunner}' || '${windowsX86Runner}' }}`,
   },
+  windowsArm: {
+    os: "windows",
+    arch: "aarch64",
+    runner: windowsARMRunner,
+  }
 } as const;
 
 const prCacheKeyPrefix =
@@ -322,7 +328,7 @@ const ci = {
   },
   on: {
     push: {
-      branches: ["main"],
+      branches: ["main", "build-windows-arm64"],
       tags: ["*"],
     },
     pull_request: {
@@ -412,6 +418,10 @@ const ci = {
             job: "test",
             profile: "release",
             skip_pr: true,
+          }, {
+            ...Runners.windowsArm,
+            job: "test",
+            profile: "debug",
           }, {
             ...Runners.linuxX86Xl,
             job: "test",
